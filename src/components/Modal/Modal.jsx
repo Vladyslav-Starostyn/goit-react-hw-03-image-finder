@@ -1,13 +1,9 @@
-import { Overlay, ModalStyled } from 'components/Modal/ModalStyled';
 import PropTypes from 'prop-types';
+import { Overlay, ModalStyled } from 'components/Modal/ModalStyled';
 
 export const Modal = ({ largeImg, about, onModalClose }) => {
   return (
-    <Overlay
-      onClick={e => {
-        if (e.target === e.currentTarget) onModalClose();
-      }}
-    >
+    <Overlay onClick={onModalClose}>
       <ModalStyled>
         <img src={largeImg} alt={about} />
       </ModalStyled>

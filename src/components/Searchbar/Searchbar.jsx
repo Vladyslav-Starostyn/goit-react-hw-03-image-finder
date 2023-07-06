@@ -1,13 +1,13 @@
-import { Formik } from "formik";
-import PropTypes from "prop-types";
-import {FaSistrix} from "react-icons/fa"
+import { Formik } from 'formik';
+import PropTypes from 'prop-types';
+import { FaSistrix } from 'react-icons/fa';
 import {
   Header,
   SearchForm,
   SearchFormButton,
   SearchFormButtonLabel,
   SearchFormInput,
-} from "components/Searchbar/SearchbarStyled";
+} from 'components/Searchbar/SearchbarStyled';
 
 export const Searchbar = ({ onSubmit }) => {
   const handleSubmit = (values, { resetForm }) => {
@@ -18,7 +18,7 @@ export const Searchbar = ({ onSubmit }) => {
     resetForm();
   };
 
-    return (
+  return (
     <Header>
       <Formik initialValues={{ query: '' }} onSubmit={handleSubmit}>
         <SearchForm>
@@ -36,11 +36,10 @@ export const Searchbar = ({ onSubmit }) => {
           />
         </SearchForm>
       </Formik>
-      </Header>
+    </Header>
   );
-}
+};
 
 Searchbar.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
-

@@ -11,39 +11,47 @@ export class ImageGalleryItem extends Component {
     isModalOpen: false,
   };
 
-  componentDidUpdate() {
-    if (this.state.isModalOpen) {
-      window.addEventListener('keydown', this.onModalKeydown);
-    } else window.removeEventListener('keydown', this.onModalKeydown);
+  toggleModal = () => {
+    this.setState(({ isModalOpen }) => ({ isModalOpen: !isModalOpen }));
+  };
+
+  componentDidMount() {
+    window.addEventListener('keydown', this.onModalKeydown);
   }
 
-  onModalKeydown = e => {
-    if (e.key === 'Escape') {
-      this.closeModal();
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.onModalKeydown);
+  }
+
+  onModalKeydown = event => {
+    if (this.state.isModalOpen) {
+      if (event.key === 'Escape') {
+        this.toggleModal();
+      }
     }
   };
 
-  openModal = () => {
-    this.setState({ isModalOpen: true });
+  onBackdropClick = event => {
+    if (event.target === event.currentTarget) {
+      this.toggleModal();
+    }
   };
 
-  closeModal = () => {
-    this.setState({ isModalOpen: false });
-  };
   render() {
-    const { webformatURL, largeImageURL, tags } = this.props.item;
+    const { webformatURL, largeImageURL, tags } = this.props;
+    const { isModalOpen } = this.state;
     return (
       <GalleryItemStyled>
         <GalleryImgStyled
           src={webformatURL}
           alt={tags}
-          onClick={this.openModal}
+          onClick={this.toggleModal}
         />
-        {this.state.isModalOpen && (
+        {isModalOpen && (
           <Modal
             largeImg={largeImageURL}
             about={tags}
-            onModalClose={this.closeModal}
+            onModalClose={this.onBackdropClick}
           />
         )}
       </GalleryItemStyled>
@@ -52,5 +60,7 @@ export class ImageGalleryItem extends Component {
 }
 
 ImageGalleryItem.propTypes = {
-  item: PropTypes.object.isRequired,
+  webformatURL: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
+  largeImageURL: PropTypes.string.isRequired,
 };
