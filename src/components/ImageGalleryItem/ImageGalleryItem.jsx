@@ -15,28 +15,6 @@ export class ImageGalleryItem extends Component {
     this.setState(({ isModalOpen }) => ({ isModalOpen: !isModalOpen }));
   };
 
-  componentDidMount() {
-    window.addEventListener('keydown', this.onModalKeydown);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.onModalKeydown);
-  }
-
-  onModalKeydown = event => {
-    if (this.state.isModalOpen) {
-      if (event.key === 'Escape') {
-        this.toggleModal();
-      }
-    }
-  };
-
-  onBackdropClick = event => {
-    if (event.target === event.currentTarget) {
-      this.toggleModal();
-    }
-  };
-
   render() {
     const { webformatURL, largeImageURL, tags } = this.props;
     const { isModalOpen } = this.state;
@@ -51,7 +29,7 @@ export class ImageGalleryItem extends Component {
           <Modal
             largeImg={largeImageURL}
             about={tags}
-            onModalClose={this.onBackdropClick}
+            onModalClose={this.toggleModal}
           />
         )}
       </GalleryItemStyled>
