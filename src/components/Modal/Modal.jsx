@@ -19,15 +19,15 @@ export class Modal extends Component {
 
   onBackdropClick = event => {
     if (event.target === event.currentTarget) {
-      this.props.toggleModal();
+      this.props.onModalClose();
     }
   };
 
   render() {
-    const { onModalClose, largeImg, about } = this.props;
+    const { largeImg, about } = this.props;
 
     return (
-      <Overlay onClick={onModalClose}>
+      <Overlay onClick={this.onBackdropClick}>
         <ModalStyled>
           <img src={largeImg} alt={about} />
         </ModalStyled>
